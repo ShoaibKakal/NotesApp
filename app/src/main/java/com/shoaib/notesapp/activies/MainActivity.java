@@ -1,21 +1,34 @@
 package com.shoaib.notesapp.activies;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
-
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.util.Patterns;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.shoaib.notesapp.R;
 import com.shoaib.notesapp.activies.adapters.NotesAdapter;
@@ -25,12 +38,17 @@ import com.shoaib.notesapp.listeners.NotesListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
+
 
 public class MainActivity extends AppCompatActivity implements NotesListener {
 
     public static final int REQUEST_CODE_ADD_NOTE = 1;
     public static final int REQUEST_CODE_UPDATE_NOTE = 2;
     public static final int REQUEST_CODE_SHOW_NOTE = 3;
+    public static final int REQUEST_CODE_STORAGE_PERMISSION = 4;
+    public static final int REQUEST_CODE_SELECT_IMAGE = 5;
+
 
     private static final String TAG = "mytag";
 
@@ -39,7 +57,8 @@ public class MainActivity extends AppCompatActivity implements NotesListener {
     private RecyclerView notesRecyclerView;
     private List<Note> noteList;
     private NotesAdapter notesAdapter;
-
+    private ImageView imageAddNote, imageAddImage, imageAddURL;
+    private AlertDialog dialogAddURL;
     private int noteClickedPosition = -1;
 
     @Override
@@ -49,6 +68,11 @@ public class MainActivity extends AppCompatActivity implements NotesListener {
         notesRecyclerView = findViewById(R.id.notesRecyclerView);
         imageAddNoteMain = findViewById(R.id.imageAddNoteMain);
         inputSearch = findViewById(R.id.inputSearch);
+        imageAddNote = findViewById(R.id.imageAddNote);
+        imageAddImage = findViewById(R.id.imageAddImage);
+        imageAddURL = findViewById(R.id.imageAddWebLink);
+
+
         //Hide the keyboard
         getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN
@@ -87,7 +111,83 @@ public class MainActivity extends AppCompatActivity implements NotesListener {
             }
         });
 
+
+        //Quick add
+
+        imageAddNote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), CreateNoteActivity.class);
+                startActivityForResult(intent,REQUEST_CODE_ADD_NOTE);
+            }
+        });
+
+
+        imageAddImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+
+                    ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_STORAGE_PERMISSION);
+
+                }
+                else{
+                    selectImage();
+                }
+            }
+        });
+
+        imageAddURL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                View view = LayoutInflater.from(MainActivity.this).inflate(R.layout.layout_add_url, (ViewGroup) findViewById(R.id.layoutAddUrlContainer),false);
+                builder.setView(view);
+                dialogAddURL = builder.create();
+
+                if (dialogAddURL.getWindow() != null){
+                    dialogAddURL.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+                }
+
+                final EditText urlText = view.findViewById(R.id.inputURL);
+
+                view.findViewById(R.id.textAdd).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (urlText.toString().isEmpty()){
+                            Toast.makeText(MainActivity.this, "Add Url", Toast.LENGTH_SHORT).show();
+                        }
+                        else if (!Patterns.WEB_URL.matcher(urlText.getText().toString()).matches()){
+                            Toast.makeText(MainActivity.this, "Enter a valid URL", Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            Intent intent = new Intent(getApplicationContext(), CreateNoteActivity.class);
+                            intent.putExtra("inputURL",urlText.getText().toString().trim());
+                            intent.putExtra("isQuickURL",true);
+                            startActivityForResult(intent,REQUEST_CODE_ADD_NOTE);
+                            dialogAddURL.dismiss();
+                        }
+                    }
+                });
+
+                view.findViewById(R.id.textCancel).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialogAddURL.dismiss();
+                    }
+                });
+
+                dialogAddURL.show();
+            }
+        });
     } // onCreate ends
+
+    private void selectImage() {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        if (intent.resolveActivity(getPackageManager()) != null){
+            startActivityForResult(intent, REQUEST_CODE_SELECT_IMAGE);
+        }
+    }
 
     public void getNotes(final int requestCode, final boolean isNoteDeleted){
         @SuppressLint("StaticFieldLeak")
@@ -141,6 +241,35 @@ public class MainActivity extends AppCompatActivity implements NotesListener {
                 getNotes(REQUEST_CODE_UPDATE_NOTE,data.getBooleanExtra("isNoteDeleted",false));
             }
             notesRecyclerView.setAdapter(notesAdapter);
+        }
+        else if(requestCode == REQUEST_CODE_SELECT_IMAGE && resultCode == RESULT_OK){
+            if (data != null){
+                Uri selectedImageUri = data.getData();
+                if (selectedImageUri != null){
+
+                    Intent intent = new Intent(getApplicationContext(), CreateNoteActivity.class);
+                    intent.putExtra("imageUri",selectedImageUri.toString());
+                    intent.putExtra("quickImage",true);
+                    startActivityForResult(intent, REQUEST_CODE_ADD_NOTE);
+
+                }
+            }
+        }
+
+
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_CODE_STORAGE_PERMISSION && grantResults.length>0 ){
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                selectImage();
+            }
+            else{
+                Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

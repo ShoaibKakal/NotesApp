@@ -37,6 +37,7 @@ import com.shoaib.notesapp.R;
 import com.shoaib.notesapp.database.NotesDatabase;
 import com.shoaib.notesapp.entities.Note;
 
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.net.URI;
 import java.text.SimpleDateFormat;
@@ -109,6 +110,24 @@ public class CreateNoteActivity extends AppCompatActivity {
 
             setViewOrUpdateNote();
         }
+
+
+
+        if (getIntent().getBooleanExtra("quickImage",false)){
+            Bundle intent = getIntent().getExtras();
+            assert intent != null;
+            Uri imageUri = Uri.parse(intent.getString("imageUri"));
+
+            addImageNote(imageUri);
+        }
+        else if(getIntent().getBooleanExtra("isQuickURL",false)){
+            Intent intent = getIntent();
+            textWebURL.setText(intent.getStringExtra("inputURL"));
+            layoutWebURL.setVisibility(View.VISIBLE);
+
+        }
+
+
 
         initMiscellaneous();
 
@@ -416,18 +435,7 @@ public class CreateNoteActivity extends AppCompatActivity {
             if (data != null){
                 Uri selectedImageUri = data.getData();
                 if (selectedImageUri != null){
-                    try {
-
-                        InputStream inputStream = getContentResolver().openInputStream(selectedImageUri);
-                        Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                        imageNote.setImageBitmap(bitmap);
-                        imageNote.setVisibility(View.VISIBLE);
-                        selectedImagePath = getPathFromUri(selectedImageUri);
-                        findViewById(R.id.imageRemoveImage).setVisibility(View.VISIBLE);
-
-                    }catch (Exception e){
-                        Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
+                    addImageNote(selectedImageUri);
                 }
             }
         }
@@ -510,5 +518,19 @@ public class CreateNoteActivity extends AppCompatActivity {
         }
     }
 
+    private void addImageNote(Uri imageUri){
+
+        try {
+            InputStream inputStream = getContentResolver().openInputStream(imageUri);
+            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+            imageNote.setImageBitmap(bitmap);
+            imageNote.setVisibility(View.VISIBLE);
+            selectedImagePath = getPathFromUri(imageUri);
+            findViewById(R.id.imageRemoveImage).setVisibility(View.VISIBLE);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+    }
 
 }
