@@ -15,13 +15,10 @@
 
 <p align="center">
 <Img src="app/src/main/res/drawable/image1.png" height="500" />
+  <Img src="app/src/main/res/drawable/image4.png" height="500"/>
 <Img src="app/src/main/res/drawable/image2.png" height="500"/>
 </p>
 
-<p align="center">
-<Img src="app/src/main/res/drawable/image3.png" height="500"/>
-<Img src="app/src/main/res/drawable/image4.png" height="500"/>
-</p>
 
   ## Concepts Covered
   
