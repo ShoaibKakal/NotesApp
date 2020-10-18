@@ -50,6 +50,10 @@ dependencies {
     implementation 'com.makeramen:roundedimageview:2.3.0'
 
 
+    //Shimmer effect
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
+
+
 
 
 }

@@ -18,6 +18,8 @@
     <color name="colorNoteColor5">#000000</color>
     <color name="colorDelete">#FF4842</color>
     <color name="colorSearchBackground">#333333</color>
-    
-    
+    <color name="colorPlaceholderBackground">#dddddd</color>
+
+
+
 </resources>

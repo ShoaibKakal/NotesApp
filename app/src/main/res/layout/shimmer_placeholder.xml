@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:id="@+id/itemShimmerPlaceholder1"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/view1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        >
+        <View
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:background="@drawable/background_shimmer_placeholder"
+            >
+        </View>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/view2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+        <View
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_150sdp"
+            android:background="@drawable/background_shimmer_placeholder"
+            >
+        </View>
+
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/view3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/view1"
+        app:layout_constraintStart_toStartOf="parent"
+
+        >
+        <View
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_70sdp"
+            android:background="@drawable/background_shimmer_placeholder"
+            >
+        </View>
+
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/view4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/view3"
+        app:layout_constraintStart_toStartOf="parent"
+        >
+
+        <View
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_170sdp"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:background="@drawable/background_shimmer_placeholder">
+
+        </View>
+
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/view5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/view2"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+        <View
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_100sdp"
+            android:background="@drawable/background_shimmer_placeholder"
+            >
+        </View>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/view6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/view5"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        >
+
+        <View
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_70sdp"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:background="@drawable/background_shimmer_placeholder">
+
+        </View>
+
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/view7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/view4"
+        app:layout_constraintStart_toStartOf="parent"
+        >
+        <View
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_100sdp"
+            android:background="@drawable/background_shimmer_placeholder"
+            >
+        </View>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/view8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/view6"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+        <View
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_190sdp"
+            android:background="@drawable/background_shimmer_placeholder"
+            >
+        </View>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/view9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/view7"
+        app:layout_constraintStart_toStartOf="parent"
+        >
+        <View
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:background="@drawable/background_shimmer_placeholder"
+            >
+        </View>
+
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/view10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/view9"
+        app:layout_constraintStart_toStartOf="parent"
+        >
+        <View
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_140sdp"
+            android:background="@drawable/background_shimmer_placeholder"
+            >
+        </View>
+
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/view11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/view8"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+        <View
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_80sdp"
+            android:background="@drawable/background_shimmer_placeholder"
+            >
+        </View>
+
+
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

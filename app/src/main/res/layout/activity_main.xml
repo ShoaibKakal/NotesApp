@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -62,20 +63,39 @@
 
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/notesRecyclerView"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginStart="@dimen/_2sdp"
-        android:layout_marginEnd="@dimen/_2sdp"
-        android:clipToPadding="false"
-        android:paddingStart="0dp"
-        android:paddingEnd="@dimen/_12sdp"
-        android:paddingBottom="@dimen/_12sdp"
-        app:layout_constraintBottom_toTopOf="@id/layoutQuickActions"
         app:layout_constraintTop_toBottomOf="@id/layoutSearch"
-        
-        />
+        app:layout_constraintBottom_toTopOf="@id/layoutQuickActions"
+        >
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/notesRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/_2sdp"
+            android:layout_marginEnd="@dimen/_2sdp"
+            android:clipToPadding="false"
+            android:paddingStart="0dp"
+            android:paddingEnd="@dimen/_12sdp"
+            android:paddingBottom="@dimen/_12sdp"
+            app:layout_constraintBottom_toTopOf="@id/layoutQuickActions"
+            app:layout_constraintTop_toBottomOf="@id/layoutSearch"
+            android:visibility="gone"
+            />
+
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmerEffect"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:shimmer_duration="1200"
+            >
+          <include layout="@layout/shimmer_placeholder"/>
+        </com.facebook.shimmer.ShimmerFrameLayout>
+    </FrameLayout>
+
 
     <LinearLayout
         android:id="@+id/layoutQuickActions"

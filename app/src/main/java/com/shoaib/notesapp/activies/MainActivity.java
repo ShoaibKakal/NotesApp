@@ -8,6 +8,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -30,6 +31,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.shoaib.notesapp.R;
 import com.shoaib.notesapp.activies.adapters.NotesAdapter;
 import com.shoaib.notesapp.database.NotesDatabase;
@@ -59,7 +61,10 @@ public class MainActivity extends AppCompatActivity implements NotesListener {
     private NotesAdapter notesAdapter;
     private ImageView imageAddNote, imageAddImage, imageAddURL;
     private AlertDialog dialogAddURL;
+    private ShimmerFrameLayout shimmerFrameLayout;
+
     private int noteClickedPosition = -1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +76,8 @@ public class MainActivity extends AppCompatActivity implements NotesListener {
         imageAddNote = findViewById(R.id.imageAddNote);
         imageAddImage = findViewById(R.id.imageAddImage);
         imageAddURL = findViewById(R.id.imageAddWebLink);
+        shimmerFrameLayout = findViewById(R.id.shimmerEffect);
+
 
 
         //Hide the keyboard
@@ -205,6 +212,18 @@ public class MainActivity extends AppCompatActivity implements NotesListener {
                 if (requestCode == REQUEST_CODE_SHOW_NOTE){
                     noteList.addAll(notes);
                     notesAdapter.notifyDataSetChanged();
+                    /*
+                    Added code here to stop shimmer because this REQUEST_CODE_SHOE_NOTE will only calls when app starts. If i add this code to somewhere else then
+                    shimmer will automatically starts whenever i add or view any note.
+                     */
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            shimmerFrameLayout.hideShimmer();
+                            shimmerFrameLayout.setVisibility(View.GONE);
+                            notesRecyclerView.setVisibility(View.VISIBLE);
+                        }
+                    },4000);
                 }
                 else if(requestCode == REQUEST_CODE_ADD_NOTE){
                     noteList.add(0, notes.get(0));
