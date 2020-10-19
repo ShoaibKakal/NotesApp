@@ -22,13 +22,13 @@
 </p>
 
 
-  ## Concepts Covered
+  ### Key Components
   
   - StaggeredGridLayoutManager
   - Shimmer Effect
   - Room Database
   
-  # Contributors
+  ## Contributors
 
 Thanks goes to these wonderful people:
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
