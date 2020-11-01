@@ -1,5 +1,5 @@
 # NotesApp
-**This application is to boost up your productivity level and as a developer, it will clear your many concepts regarding Android.** 
+**This application is to boost up your productivity level and as a developer, it will clear your many concepts regarding Android...** 
 
 
 [![Visitors](https://visitor-badge.glitch.me/badge?page_id=shoaibkakal.visitor-badge)](https://github.com/shoaibkakal)
